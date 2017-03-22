@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SimpleTweets</string>
+    <string name="app_name">Twitter</string>
     <string name="login_label">Connect to Twitter</string>
-    <string name="title_activity_timeline">Home Timeline</string>
+    <string name="title_activity_timeline">\t Timeline</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="settings">settings</string>
     <string name="bobs_tweet">BoBs Tweet</string>
     <string name="bob">Bob</string>
+    <string name="real_name">Real Name</string>
+    <string name="relTiimeStamp">1h</string>
 
 </resources>

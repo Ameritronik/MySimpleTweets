@@ -49,4 +49,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		getClient().connect();
 	}
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

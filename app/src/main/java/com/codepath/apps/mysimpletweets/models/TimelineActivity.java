@@ -33,6 +33,9 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.tw__ic_logo_large);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         // find the listView
         lvTweets = (ListView) findViewById(R.id.lvTweets);
         // create the arraylist from data
