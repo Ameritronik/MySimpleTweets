@@ -1,4 +1,4 @@
-package com.codepath.apps.mysimpletweets;
+package com.codepath.apps.mysimpletweets.database;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 

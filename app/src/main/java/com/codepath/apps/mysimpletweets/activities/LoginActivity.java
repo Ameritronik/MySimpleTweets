@@ -1,11 +1,12 @@
-package com.codepath.apps.mysimpletweets;
+package com.codepath.apps.mysimpletweets.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-import com.codepath.apps.mysimpletweets.models.TimelineActivity;
+import com.codepath.apps.mysimpletweets.R;
+import com.codepath.apps.mysimpletweets.network.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 // User signs in here
@@ -46,7 +47,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// Uses the client to initiate OAuth authorization
 	// This should be tied to a button used to login
 	public void loginToRest(View view) {
-		getClient().connect();
+            getClient().connect();
 	}
 
     @Override
@@ -54,4 +55,5 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
         super.onStop();
         finish();
     }
+
 }

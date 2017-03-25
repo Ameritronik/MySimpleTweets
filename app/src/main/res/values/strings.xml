@@ -10,5 +10,11 @@
     <string name="bob">Bob</string>
     <string name="real_name">Real Name</string>
     <string name="relTiimeStamp">1h</string>
+    <string name="tweet">Tweet</string>
+    <string name="ok">OK</string>
+    <string name="twt">Tweet</string>
+    <string name="_140">140</string>
+    <string name="hkan">HKan</string>
+    <string name="hk">\@HK</string>
 
 </resources>

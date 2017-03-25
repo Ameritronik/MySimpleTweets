@@ -31,6 +31,7 @@ repositories {
 
 def dbflow_version = "4.0.0-beta5"
 
+
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     // Picasso for remote image loading
@@ -42,7 +43,15 @@ dependencies {
     compile 'com.codepath.libraries:android-oauth-handler:1.1.0'
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'jp.wasabeef:picasso-transformations:2.1.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:design:25.3.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'commons-io:commons-io:2.4'
+    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.google.android.gms:play-services-plus:10.2.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
 }

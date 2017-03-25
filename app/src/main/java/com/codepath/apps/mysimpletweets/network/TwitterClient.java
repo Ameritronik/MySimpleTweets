@@ -1,4 +1,4 @@
-package com.codepath.apps.mysimpletweets;
+package com.codepath.apps.mysimpletweets.network;
 
 import android.content.Context;
 
@@ -26,39 +26,46 @@ public class TwitterClient extends OAuthBaseClient {
 	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
 	public static final String REST_CONSUMER_KEY = "bhQ7PamFItULbj0yJkXltfqLh";       // Change this
 	public static final String REST_CONSUMER_SECRET = "ZtD0pO34Bz6ETbzSdtvBo9EjIZxDkPuyEHbiESbosfKcv47kSD"; // Change this
-	public static final String REST_CALLBACK_URL = "oauth://cpsimpletweets"; // Change this (here and in manifest)
-
+	public static final String REST_CALLBACK_URL = "oauth://hkcpsimpletweets"; // Change this (here and in manifest)
+	private long id =1;
 	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
 
-	// CHANGE THIS
-	// DEFINE METHODS for different API endpoints here
-    /*
-	public void getInterestingnessList(AsyncHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");
-		// Can specify query string params directly or through RequestParams.
-		RequestParams params = new RequestParams();
-		params.put("format", "json");
-		client.get(apiUrl, params, handler);
+	public void setId(long id) {
+		this.id = id;
 	}
-*/
-	// Method == Endpoint
 
+	public long getId() {
+		return id;
+	}
+
+	// Method == Endpoint
 	// HomeTimeLine -- gets us the home timeline
-	/*
-	the home timeline for the user
-	GET statuses/home_timeline.json
-	count=25
-	since_id=1
-	 */
 	public void getHomeTimeline(AsyncHttpResponseHandler handler) {
-			String apiUrl = getApiUrl("statuses/home_timeline.json");
-			RequestParams params = new RequestParams();
-			params.put("count", 25);
-			params.put("since_id",1);
-			// Execute request
-			getClient().get(apiUrl,params,handler);
+        String apiUrl = getApiUrl("statuses/home_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("since_id",1);
+        // Execute request
+        getClient().get(apiUrl,params,handler);
+	}
+	public void getHomeTimelineExtended(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		String tMode = "extended_entities";
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		long newId = this.id;
+		if (newId < 10) {
+			newId = 1;
+			params.put("since_id", newId);
+		} else {
+			params.put("max_id",newId);
+		}
+		params.put("tweet_mode",tMode);
+		//Log.d("DEBUG","From Client Url: "+apiUrl+" id: "+newId+" mode: "+tMode);
+		// Execute request
+		getClient().get(apiUrl,params,handler);
 	}
 
 	// Compose tweets
@@ -71,4 +78,13 @@ public class TwitterClient extends OAuthBaseClient {
 	 *    i.e client.get(apiUrl, params, handler);
 	 *    i.e client.post(apiUrl, params, handler);
 	 */
+    public void postHomeTimeline(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/home_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("since_id",1);
+        // Execute request
+        getClient().post(apiUrl,params,handler);
+    }
+
 }

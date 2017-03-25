@@ -1,5 +1,7 @@
 package com.codepath.apps.mysimpletweets.models;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,6 +102,10 @@ public class Tweet {
     private long uid; // unique id
     private User user;
     private String createdAt;
+    private String tMediaType;
+    private String tMediaURL;
+    private Long tMediaId;
+    private String tMediaprofileImageUrl;
 
     public User getUser() {
         return user;
@@ -117,6 +123,22 @@ public class Tweet {
         return createdAt;
     }
 
+    public String gettMediaType() {
+        return tMediaType;
+    }
+
+    public String gettMediaURL() {
+        return tMediaURL;
+    }
+
+    public Long gettMediaId() {
+        return tMediaId;
+    }
+
+    public String gettMediaprofileImageUrl() {
+        return tMediaprofileImageUrl;
+    }
+
     // DeSerialize the JSON and build tweet objs.
     // Tweet.fromJSON ... etc
     public static Tweet fromJSON(JSONObject jsonObject) {
@@ -129,7 +151,6 @@ public class Tweet {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         // return the tweet
         return tweet;
     }
@@ -142,6 +163,20 @@ public class Tweet {
             try {
                 tweetJson = jsonArray.getJSONObject(i);
                 Tweet tweet = Tweet.fromJSON(tweetJson);
+                JSONObject entities = tweetJson.getJSONObject("entities");
+                if(entities.has("media"))
+                {   JSONArray mMediaArray = entities.getJSONArray("media");
+                    //Log.d("DEBUG","MediaArray: "+mMediaArray.toString());
+                    JSONObject inJson = mMediaArray.getJSONObject(0);
+                    tweet.tMediaType = inJson.getString("type");
+                    tweet.tMediaprofileImageUrl = inJson.getString("media_url_https");
+                    tweet.tMediaId = inJson.getLong("id");
+                    Log.d("DEBUG", "MediaType: " + tweet.tMediaType);
+                } else {
+                    tweet.tMediaType = null;
+                    tweet.tMediaprofileImageUrl = "";
+                    tweet.tMediaId = Long.valueOf(1);
+                }
                 if(tweet != null) {
                     tweets.add(tweet);
                 }
