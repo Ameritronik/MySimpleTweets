@@ -103,6 +103,9 @@ public class Tweet {
     private String tMediaType;
     private String tMediaURL;
     private Long tMediaId;
+    private String tRetweetCount;
+    private String tFavoriteCount;
+
     private String tMediaprofileImageUrl;
 
     public User getUser() {
@@ -169,6 +172,14 @@ public class Tweet {
         this.tMediaprofileImageUrl = tMediaprofileImageUrl;
     }
 
+    public String gettRetweetCount() {
+        return tRetweetCount;
+    }
+
+    public String gettFavoriteCount() {
+        return tFavoriteCount;
+    }
+
     // DeSerialize the JSON and build tweet objs.
     // Tweet.fromJSON ... etc
     public static Tweet fromJSON(JSONObject jsonObject) {
@@ -177,6 +188,8 @@ public class Tweet {
             tweet.body = jsonObject.getString("text");
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
+            tweet.tRetweetCount = String.valueOf(jsonObject.getInt("retweet_count"));
+            tweet.tFavoriteCount = String.valueOf(jsonObject.getInt("favorite_count"));
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -218,4 +231,6 @@ public class Tweet {
         }
         return tweets;
     }
+
+
 }

@@ -1,6 +1,8 @@
 package com.codepath.apps.mysimpletweets.activities;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -8,10 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.R;
@@ -30,6 +36,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -49,6 +56,7 @@ public class TimelineActivity extends AppCompatActivity
     private static String FILEOFTWEETS = "TWEETS.TXT";
     private static boolean firstTweetAccess = false;
     private static long myCurrentUidPosition = 1;
+    private Tweet myTweet = new Tweet();
     // Have an utility for reading tweets
     private JSONArray readTweets() throws JSONException {
         File filesDir = getFilesDir();
@@ -77,35 +85,6 @@ public class TimelineActivity extends AppCompatActivity
         }
     }
 
-    // My tweet Params
-    public static class myTweetParams { // set & get Tweets from compose dialog
-        static String myTweetMessage = "";
-        static String tweetToUserId = "";
-        static boolean newTweet = false;
-        public static String getMyTweetMessage() {
-            return myTweetMessage;
-        }
-        public static void setMyTweetMessage(String myTweetMessage) {
-            Log.d("DEBUG","Got msg: "+myTweetMessage);
-            myTweetParams.myTweetMessage = myTweetMessage;
-        }
-        public static String getTweetToUserId() {
-            return tweetToUserId;
-        }
-        public static void setTweetToUserId(String tweetToUserId) {
-            Log.d("DEBUG","Got UserId: "+tweetToUserId);
-            myTweetParams.tweetToUserId = tweetToUserId;
-        }
-        public static boolean isNewTweet() {
-            return newTweet;
-        }
-        public static void setNewTweet(boolean newTweet) {
-            if(newTweet) Log.d("DEBUG","Set newTweet is: true");
-            else Log.d("DEBUG","Set newTweet is: false");
-            myTweetParams.newTweet = newTweet;
-        }
-    }
-
     private void showEditDialog() {
         //showToast(getBaseContext(),"You clicked on compose button");
         ComposeTweetFragment composeTweetDialog = new ComposeTweetFragment();
@@ -116,33 +95,48 @@ public class TimelineActivity extends AppCompatActivity
         //editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
+    public void makeMyTweet(String twBody) {
+        //Tweet t = new Tweet();
+        //t.setBody(twBody);
+        //t.setUid(1923);
+        User iAm = new User();
+        iAm.setName("HK");
+        iAm.setScreenName("pjaytumkur");
+        String id_str = "843926695107166208";
+        long uid = Long.parseLong(id_str);
+        iAm.setUid(uid);
+        Uri uri = Uri.parse("android.resource://com.codepath.apps.mysimpletweets/drawable/mytwitimage");
+        iAm.setProfileImageUrl(uri.toString());
+        // Get 'now' time
+        Date today = new Date();
+        CharSequence cTime  = DateFormat.format("EEE MMM dd HH:mm:ss -0400 yyyy", today.getTime());
+        // Compose my Tweet
+        myTweet.setBody(twBody);
+        myTweet.setUid(uid);
+        myTweet.setCreatedAt(cTime.toString());
+        myTweet.setUser(iAm);
+        myTweet.settMediaType(null);
+        myTweet.settMediaType(null);
+        myTweet.settMediaprofileImageUrl("");
+        myTweet.settMediaId(Long.valueOf(1));
+    }
+
     public void dataBack(final String twBody, String twURL) {
-        Toast.makeText(this, "Body: " + twBody +" URL: "+twURL, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Body: " + twBody +" URL: "+twURL, Toast.LENGTH_SHORT).show();
         client.setMyTweet(twBody);
         client.settweetUser_id(twURL);
         client.postHomeTimeline(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                //super.onSuccess(statusCode, headers, response);
-                Log.d("DEBUG", response.toString());
-                Log.d("DEBUG", response.toString());
-                Tweet t = new Tweet();
-                t.setBody(twBody);
-                t.setUid(1923);
-                t.setCreatedAt("11:29");
-                t.setUser(new User());
-
-                aTweets.addTweet(t);
+                showCustomToast("Tweet successful", "GREEN");
+                makeMyTweet(twBody);
+                aTweets.addTweet(myTweet);
                 aTweets.notifyDataSetChanged();
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                //String JsonErrorMessage = "Json message corrupted";
-                Log.d("DEBUG", errorResponse.toString());
-                Log.d("DEBUG", errorResponse.toString());
-                //showToast(getBaseContext(), JsonErrorMessage);
+                //super.onFailure(statusCode, headers, throwable, errorResponse);
+                showCustomToast("Tweet unsuccessful","RED");
             }
         });
     }
@@ -156,13 +150,11 @@ public class TimelineActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.tw__ic_logo_large);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setSize(FloatingActionButton.SIZE_MINI);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 showEditDialog();
             }
         });
@@ -204,7 +196,27 @@ public class TimelineActivity extends AppCompatActivity
             toast.cancel();
             toast = null;
         }
-        toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+        toast.show();
+    }
+    public void showCustomToast(String message, String color) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) findViewById(R.id.custom_toast_container));
+        TextView text = (TextView) layout.findViewById(R.id.toastText);
+        text.setText(message);
+        if(color != null) {
+            if (color.equals("BLACK")) {
+                text.setTextColor(Color.BLACK);
+            } else if (color.equals("RED")) {
+                text.setTextColor(Color.RED);
+            } else if (color.equals("BLUE")) {
+                text.setTextColor(Color.BLUE);
+            }
+        } // else defaul toast text color of green
+        Toast toast = new Toast(getBaseContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
         toast.show();
     }
 
@@ -212,17 +224,7 @@ public class TimelineActivity extends AppCompatActivity
     // Fill the list view by creating the tweet objects from json
     private void populateTimeline(long uId) {
         client.setId(uId);
-        Log.d("DEBUG","New Tweet is available: "+myTweetParams.isNewTweet());
-        if(myTweetParams.isNewTweet()) {
-            // Remember to set my new Tweet to false.
-            myTweetParams.setNewTweet(false);
-            // then insert my Tweet in my Db, then post my Tweet
-            client.setMyTweet(myTweetParams.getMyTweetMessage().toString());
-            client.settweetUser_id(myTweetParams.getTweetToUserId().toString());
-            client.postHomeTimeline(new JsonHttpResponseHandler(){});
-            // get and display all Tweets
-        } else {
-            client.getHomeTimeline(new JsonHttpResponseHandler() {
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
                 // Successful
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
@@ -245,12 +247,12 @@ public class TimelineActivity extends AppCompatActivity
                     showToast(getBaseContext(), JsonErrorMessage);
                 }
             });
-        }
-
     }
 
     public void loadNextDataFromApi(Long offset) {
         //firstTweetAccess = false;
+        showCustomToast("Getting more tweets...", "BLUE");
+        //showToast(getBaseContext(),"Getting more tweets");
         int mTweetSize = tweets.size() - 1;
         //rvTweets.notifyItemRangeInserted(mSize, mArticleSize);
         rvTweets.setItemViewCacheSize(mTweetSize); // Should this mbe mSize?
@@ -279,4 +281,16 @@ public class TimelineActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void tweetReply(View view) {
+        Log.d("DEBUG","Added to Favorite"+tweets.toString());
+    }
+
+    public void reTweet(View view) {
+        Log.d("DEBUG","Added to Favorite"+tweets.toString());
+    }
+
+    public void addToFavorite(View view) {
+
+        Log.d("DEBUG","Added to Favorite"+tweets.toString());
+    }
 }

@@ -63,6 +63,7 @@
             android:layout_above="@+id/btnTweet"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:hint="@string/Hint_message"
             android:ems="10"
             android:inputType="textMultiLine" />
     </android.support.design.widget.TextInputLayout>

@@ -13,6 +13,7 @@ public class User {
     private long uid;
     private String screenName;
     private String profileImageUrl;
+    private String profile_image_url_https;
     // Getters
 
     public String getName() {
@@ -29,6 +30,27 @@ public class User {
 
     public String getProfileImageUrl() {
         return profileImageUrl;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+        this.profile_image_url_https = profileImageUrl;
+    }
+
+    public void setProfile_image_url_https(String profile_image_url_https) {
+        this.profile_image_url_https = profile_image_url_https;
     }
 
     // deserialize the user from json object

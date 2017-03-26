@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.activities.TimelineActivity;
@@ -51,7 +50,7 @@ public class ComposeTweetFragment extends DialogFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_compose_tweet, container, false);
         ButterKnife.bind(this, rootView);
-        getDialog().setTitle("Twitter Mytweet");
+        getDialog().setTitle("Compose Tweet");
         TextInputLayout etTweetWC = (TextInputLayout) rootView.findViewById(R.id.etTweetWC);
         etTweetWC.getEditText().addTextChangedListener(new CharacterCountErrorWatcher(etTweetWC, mTweetWordCountMin, mTweetWordCountMax));
         return rootView;
@@ -61,13 +60,6 @@ public class ComposeTweetFragment extends DialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Button btnTweet = (Button) view.findViewById(R.id.btnTweet);
         Button btCancel = (Button) view.findViewById(R.id.btCancel);
-
-        //etTweet.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        Toast.makeText(getContext(), "Toast to show you selected text", Toast.LENGTH_SHORT).show();
-        //    }
-        //});
         btCancel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -78,30 +70,15 @@ public class ComposeTweetFragment extends DialogFragment {
         btnTweet.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getContext(), "OK to Tweet?", Toast.LENGTH_SHORT).show();
                 String tweetTo = etTweetTo.getText().toString();
-                //Toast.makeText(getContext(), "Your Tweet To: "+tweetTo, Toast.LENGTH_SHORT).show();
-                if(tweetTo != null ) {
-                    TimelineActivity.myTweetParams.setTweetToUserId("@"+tweetTo);
-                } else {
-                    TimelineActivity.myTweetParams.setTweetToUserId(MYTWEETID);
-                }
                 String tweetText = etTweet.getText().toString();
                 if (tweetText != null ) {
                     composeDone.dataBack(tweetText, tweetTo);
                 } else  {
-                    TimelineActivity.myTweetParams.setMyTweetMessage("Blank Tweet");
-                    Toast.makeText(getContext(), "Your Tweet Msg: Blank Tweet", Toast.LENGTH_SHORT).show();
+                    TimelineActivity.showToast(getContext(),"Blank Tweet text -- not posted");
                 }
                 dismiss();
             }
         });
-
-
      }
-
-
-
-
-
 }

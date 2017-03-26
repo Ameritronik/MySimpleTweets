@@ -117,6 +117,8 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         TextView tvRealName = (TextView) view.itemView.findViewById(R.id.tvName);
         TextView tvBody = (TextView) view.itemView.findViewById(R.id.tvBody);
         TextView tvRelTime = (TextView) view.itemView.findViewById(R.id.tvTimeStamp);
+        TextView tvRetweetCount = (TextView) view.itemView.findViewById(R.id.tvRetweetCount);
+        TextView tvStarCount = (TextView) view.itemView.findViewById(R.id.tvStarCount);
         //4. Populate data into the subviews
         tvUserName.setText(tweet.getUser().getScreenName());
         tvUserName.setTextColor(Color.BLACK);
@@ -129,9 +131,13 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         String showReltime = getRelativeTimeAgo(tweetTime);
         tvRelTime.setText(showReltime);
         tvRelTime.setTextColor(Color.GRAY);
+        tvRetweetCount.setText(tweet.gettRetweetCount());
+        tvStarCount.setText(tweet.gettFavoriteCount());
         ivProfileImage.setImageResource((android.R.color.transparent));
-        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
-
+        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl())
+                .fit()
+                .centerInside()
+                .transform(new RoundedCornersTransformation(10, 10)).into(ivProfileImage);
     }
 
     private void configurePhotoTweetViews(PhotoTweetViews view, int position) {
@@ -141,6 +147,8 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         TextView tvRealName = (TextView) view.itemView.findViewById(R.id.tvName);
         TextView tvBody = (TextView) view.itemView.findViewById(R.id.tvBody);
         TextView tvRelTime = (TextView) view.itemView.findViewById(R.id.tvTimeStamp);
+        TextView tvRetweetCount = (TextView) view.itemView.findViewById(R.id.tvRetweetCount);
+        TextView tvStarCount = (TextView) view.itemView.findViewById(R.id.tvStarCount);
         ImageView tweetPhoto = (ImageView) view.itemView.findViewById(R.id.ivPhoto);
         //Log.d("DEBUG","in Config Photo Views");
         //4. Populate data into the subviews
@@ -155,8 +163,13 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         String showReltime = getRelativeTimeAgo(tweetTime);
         tvRelTime.setText(showReltime);
         tvRelTime.setTextColor(Color.GRAY);
+        tvRetweetCount.setText(tweet.gettRetweetCount());
+        tvStarCount.setText(tweet.gettFavoriteCount());
         ivProfileImage.setImageResource((android.R.color.transparent));
-        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
+        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl())
+                .fit()
+                .centerInside()
+                .transform(new RoundedCornersTransformation(10, 10)).into(ivProfileImage);
         Picasso.with(getContext()).load(tweet.gettMediaprofileImageUrl())
                 .fit()
                 .centerInside()
