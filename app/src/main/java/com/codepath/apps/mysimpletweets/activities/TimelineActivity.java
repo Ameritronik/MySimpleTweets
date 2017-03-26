@@ -18,19 +18,23 @@ import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.adapters.ComplexRecyclerAdapter;
 import com.codepath.apps.mysimpletweets.fragments.ComposeTweetFragment;
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.models.User;
 import com.codepath.apps.mysimpletweets.network.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity
+        implements ComposeTweetFragment.TweetToTimeLineListener {
 
     private TwitterClient client;
     private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
@@ -44,6 +48,7 @@ public class TimelineActivity extends AppCompatActivity {
     private static String toShow;
     private static String FILEOFTWEETS = "TWEETS.TXT";
     private static boolean firstTweetAccess = false;
+    private static long myCurrentUidPosition = 1;
     // Have an utility for reading tweets
     private JSONArray readTweets() throws JSONException {
         File filesDir = getFilesDir();
@@ -72,6 +77,76 @@ public class TimelineActivity extends AppCompatActivity {
         }
     }
 
+    // My tweet Params
+    public static class myTweetParams { // set & get Tweets from compose dialog
+        static String myTweetMessage = "";
+        static String tweetToUserId = "";
+        static boolean newTweet = false;
+        public static String getMyTweetMessage() {
+            return myTweetMessage;
+        }
+        public static void setMyTweetMessage(String myTweetMessage) {
+            Log.d("DEBUG","Got msg: "+myTweetMessage);
+            myTweetParams.myTweetMessage = myTweetMessage;
+        }
+        public static String getTweetToUserId() {
+            return tweetToUserId;
+        }
+        public static void setTweetToUserId(String tweetToUserId) {
+            Log.d("DEBUG","Got UserId: "+tweetToUserId);
+            myTweetParams.tweetToUserId = tweetToUserId;
+        }
+        public static boolean isNewTweet() {
+            return newTweet;
+        }
+        public static void setNewTweet(boolean newTweet) {
+            if(newTweet) Log.d("DEBUG","Set newTweet is: true");
+            else Log.d("DEBUG","Set newTweet is: false");
+            myTweetParams.newTweet = newTweet;
+        }
+    }
+
+    private void showEditDialog() {
+        //showToast(getBaseContext(),"You clicked on compose button");
+        ComposeTweetFragment composeTweetDialog = new ComposeTweetFragment();
+        FragmentManager mFragManager = getSupportFragmentManager();
+        composeTweetDialog.show(mFragManager,"Tweet");
+        //FragmentManager fm = getSupportFragmentManager();
+        //EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Compose Tweet");
+        //editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
+
+    public void dataBack(final String twBody, String twURL) {
+        Toast.makeText(this, "Body: " + twBody +" URL: "+twURL, Toast.LENGTH_SHORT).show();
+        client.setMyTweet(twBody);
+        client.settweetUser_id(twURL);
+        client.postHomeTimeline(new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //super.onSuccess(statusCode, headers, response);
+                Log.d("DEBUG", response.toString());
+                Log.d("DEBUG", response.toString());
+                Tweet t = new Tweet();
+                t.setBody(twBody);
+                t.setUid(1923);
+                t.setCreatedAt("11:29");
+                t.setUser(new User());
+
+                aTweets.addTweet(t);
+                aTweets.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                //String JsonErrorMessage = "Json message corrupted";
+                Log.d("DEBUG", errorResponse.toString());
+                Log.d("DEBUG", errorResponse.toString());
+                //showToast(getBaseContext(), JsonErrorMessage);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,10 +162,8 @@ public class TimelineActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //showToast(getBaseContext(),"You clicked on compose button");
-                ComposeTweetFragment composeTweetDialog = new ComposeTweetFragment();
-                FragmentManager mFragManager = getSupportFragmentManager();
-                composeTweetDialog.show(mFragManager,"Tweet");
+
+                showEditDialog();
             }
         });
         // find the listView
@@ -115,6 +188,7 @@ public class TimelineActivity extends AppCompatActivity {
                 // Add whatever code is needed to append new items to the bottom of the list
                 //Log.d("DEBUG","LoadMore: page "+page+" Ct: "+totalItemsCount);
                 long mUid = (tweets.get(totalItemsCount-1).getUid()-1);
+                myCurrentUidPosition = mUid;
                 //Log.d("DEBUG","LoadMore: page "+page+" Ct: "+totalItemsCount+" uId: "+mUid);
                 loadNextDataFromApi(mUid);
             }
@@ -138,8 +212,17 @@ public class TimelineActivity extends AppCompatActivity {
     // Fill the list view by creating the tweet objects from json
     private void populateTimeline(long uId) {
         client.setId(uId);
-
-            client.getHomeTimelineExtended(new JsonHttpResponseHandler() {
+        Log.d("DEBUG","New Tweet is available: "+myTweetParams.isNewTweet());
+        if(myTweetParams.isNewTweet()) {
+            // Remember to set my new Tweet to false.
+            myTweetParams.setNewTweet(false);
+            // then insert my Tweet in my Db, then post my Tweet
+            client.setMyTweet(myTweetParams.getMyTweetMessage().toString());
+            client.settweetUser_id(myTweetParams.getTweetToUserId().toString());
+            client.postHomeTimeline(new JsonHttpResponseHandler(){});
+            // get and display all Tweets
+        } else {
+            client.getHomeTimeline(new JsonHttpResponseHandler() {
                 // Successful
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
@@ -149,8 +232,9 @@ public class TimelineActivity extends AppCompatActivity {
                     // Create models and add to adapter here
                     //Load models into listview
                     tweets.addAll(Tweet.fromJSONArray(json));
+                    //Log.d("DEBUG","Tw:"+tweets.toString());
                     aTweets.notifyDataSetChanged();
-                    //Log.d("DEBUG"," mmm");
+
                 }
                 // failure
                 @Override
@@ -161,6 +245,7 @@ public class TimelineActivity extends AppCompatActivity {
                     showToast(getBaseContext(), JsonErrorMessage);
                 }
             });
+        }
 
     }
 

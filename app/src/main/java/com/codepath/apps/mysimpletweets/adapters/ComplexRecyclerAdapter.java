@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,9 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         mContext = context;
     }
 
+    public static void addTweet(Tweet t) {
+        tweets.add(0,t);
+    }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
@@ -62,7 +64,7 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             retMtype =  NORMAL;
         }
         String rm = String.valueOf(retMtype);
-        Log.d("DEBUG","CRA: Mtype: "+mType+" RetM: "+rm+" pos: "+position);
+        //Log.d("DEBUG","CRA: Mtype: "+mType+" RetM: "+rm+" pos: "+position);
         return retMtype;
     }
 
@@ -140,7 +142,7 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         TextView tvBody = (TextView) view.itemView.findViewById(R.id.tvBody);
         TextView tvRelTime = (TextView) view.itemView.findViewById(R.id.tvTimeStamp);
         ImageView tweetPhoto = (ImageView) view.itemView.findViewById(R.id.ivPhoto);
-        Log.d("DEBUG","in Config Photo Views");
+        //Log.d("DEBUG","in Config Photo Views");
         //4. Populate data into the subviews
         tvUserName.setText(tweet.getUser().getScreenName());
         tvUserName.setTextColor(Color.BLACK);

@@ -1,7 +1,5 @@
 package com.codepath.apps.mysimpletweets.models;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -139,6 +137,38 @@ public class Tweet {
         return tMediaprofileImageUrl;
     }
 
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void settMediaType(String tMediaType) {
+        this.tMediaType = tMediaType;
+    }
+
+    public void settMediaURL(String tMediaURL) {
+        this.tMediaURL = tMediaURL;
+    }
+
+    public void settMediaId(Long tMediaId) {
+        this.tMediaId = tMediaId;
+    }
+
+    public void settMediaprofileImageUrl(String tMediaprofileImageUrl) {
+        this.tMediaprofileImageUrl = tMediaprofileImageUrl;
+    }
+
     // DeSerialize the JSON and build tweet objs.
     // Tweet.fromJSON ... etc
     public static Tweet fromJSON(JSONObject jsonObject) {
@@ -162,6 +192,7 @@ public class Tweet {
             JSONObject tweetJson = null;
             try {
                 tweetJson = jsonArray.getJSONObject(i);
+                //Log.d("DEBUG","TWEET: "+jsonArray.getJSONObject(i).toString());
                 Tweet tweet = Tweet.fromJSON(tweetJson);
                 JSONObject entities = tweetJson.getJSONObject("entities");
                 if(entities.has("media"))
@@ -171,7 +202,7 @@ public class Tweet {
                     tweet.tMediaType = inJson.getString("type");
                     tweet.tMediaprofileImageUrl = inJson.getString("media_url_https");
                     tweet.tMediaId = inJson.getLong("id");
-                    Log.d("DEBUG", "MediaType: " + tweet.tMediaType);
+                    //Log.d("DEBUG", "MediaType: " + tweet.tMediaType);
                 } else {
                     tweet.tMediaType = null;
                     tweet.tMediaprofileImageUrl = "";

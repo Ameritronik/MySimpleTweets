@@ -1,7 +1,9 @@
 package com.codepath.apps.mysimpletweets.network;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.codepath.oauth.OAuthAsyncHttpClient;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -24,10 +26,23 @@ import org.scribe.builder.api.TwitterApi;
 public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
 	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
+	//public static final String REST_CONSUMER_KEY = "RYwocycb6TCu9f0fsPNrEulHm"; // alternate did not work
 	public static final String REST_CONSUMER_KEY = "bhQ7PamFItULbj0yJkXltfqLh";       // Change this
+	//public static final String REST_CONSUMER_SECRET = "WObp5bBhhVzwLAcjRRVqgC9JvooWYxuBEdVH1FfFhWger0Ycf2";
 	public static final String REST_CONSUMER_SECRET = "ZtD0pO34Bz6ETbzSdtvBo9EjIZxDkPuyEHbiESbosfKcv47kSD"; // Change this
 	public static final String REST_CALLBACK_URL = "oauth://hkcpsimpletweets"; // Change this (here and in manifest)
 	private long id =1;
+	private String myTweet = "no News";
+	private String tweetUser_id = "HK";
+
+	public void setMyTweet(String myTweet) {
+		this.myTweet = myTweet;
+	}
+
+	public void settweetUser_id(String tUser_id) {
+		this.tweetUser_id = tUser_id;
+	}
+
 	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
@@ -46,7 +61,13 @@ public class TwitterClient extends OAuthBaseClient {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
         params.put("count", 25);
-        params.put("since_id",1);
+		long newId = this.id;
+		if (newId < 10) {
+			newId = 1;
+			params.put("since_id", newId);
+		} else {
+			params.put("max_id",newId);
+		}
         // Execute request
         getClient().get(apiUrl,params,handler);
 	}
@@ -79,12 +100,16 @@ public class TwitterClient extends OAuthBaseClient {
 	 *    i.e client.post(apiUrl, params, handler);
 	 */
     public void postHomeTimeline(AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("statuses/home_timeline.json");
+        String apiUrl = getApiUrl("statuses/update.json");
         RequestParams params = new RequestParams();
-        params.put("count", 25);
-        params.put("since_id",1);
-        // Execute request
-        getClient().post(apiUrl,params,handler);
+        params.put("status", this.myTweet);
+        //params.put("screen_name",this.tweetUser_id);
+		String xTweet = "About to Tweet: Text "+this.myTweet+" To: "+this.tweetUser_id;
+		Log.d("DEBUG",xTweet);
+		// Execute request
+        OAuthAsyncHttpClient client = getClient();
+        Log.d("DEBUG",client.toString());
+        client.post(apiUrl,params,handler);
     }
 
 }

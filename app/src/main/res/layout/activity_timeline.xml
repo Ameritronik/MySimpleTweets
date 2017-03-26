@@ -38,7 +38,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/tweet_compose" />
+        android:scaleType="center"
+        app:elevation="0dp"
+        app:srcCompat="@drawable/tweet_compose_small" />
 
 </RelativeLayout>

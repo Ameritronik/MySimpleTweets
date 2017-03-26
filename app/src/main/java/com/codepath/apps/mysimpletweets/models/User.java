@@ -1,7 +1,5 @@
 package com.codepath.apps.mysimpletweets.models;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,7 +39,7 @@ public class User {
             u.uid = json.getLong("id_str");
             u.screenName = json.getString("screen_name");
             u.profileImageUrl = json.getString("profile_image_url_https").replace("_normal","");
-            Log.d("DEBUG","User "+u.toString());
+            //Log.d("DEBUG","User "+u.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

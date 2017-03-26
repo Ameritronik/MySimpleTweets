@@ -40,6 +40,7 @@ dependencies {
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+
     compile 'com.codepath.libraries:android-oauth-handler:1.1.0'
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -51,7 +52,5 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
     compile 'com.android.support:support-v4:25.3.0'
     compile 'com.google.android.gms:play-services-plus:10.2.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-
+    compile 'com.jakewharton:butterknife:7.0.1'
 }

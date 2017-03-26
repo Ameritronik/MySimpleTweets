@@ -3,7 +3,7 @@
 
     <string name="app_name">Twitter</string>
     <string name="login_label">Connect to Twitter</string>
-    <string name="title_activity_timeline">\t Timeline</string>
+    <string name="title_activity_timeline">\t HK @pjaytumkur</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="settings">settings</string>
     <string name="bobs_tweet">BoBs Tweet</string>
@@ -14,7 +14,11 @@
     <string name="ok">OK</string>
     <string name="twt">Tweet</string>
     <string name="_140">140</string>
-    <string name="hkan">HKan</string>
-    <string name="hk">\@HK</string>
+    <string name="hkan">HK</string>
+    <string name="hk">\@pjaytumkur</string>
+    <string name="tweet_to">Tweet To:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
