@@ -109,7 +109,7 @@ public class TimelineActivity extends AppCompatActivity
         iAm.setProfileImageUrl(uri.toString());
         // Get 'now' time
         Date today = new Date();
-        CharSequence cTime  = DateFormat.format("EEE MMM dd HH:mm:ss -0400 yyyy", today.getTime());
+        CharSequence cTime  = DateFormat.format("EEE MMM dd HH:mm:ss -0700 yyyy", today.getTime());
         // Compose my Tweet
         myTweet.setBody(twBody);
         myTweet.setUid(uid);
@@ -215,7 +215,7 @@ public class TimelineActivity extends AppCompatActivity
             }
         } // else defaul toast text color of green
         Toast toast = new Toast(getBaseContext());
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
     }
@@ -282,15 +282,17 @@ public class TimelineActivity extends AppCompatActivity
     }
 
     public void tweetReply(View view) {
-        Log.d("DEBUG","Added to Favorite"+tweets.toString());
+        //showToast(this, "Tweet Reply clicked");
+        //Log.d("DEBUG","Tweet Reply "+tweets.toString());
     }
 
     public void reTweet(View view) {
-        Log.d("DEBUG","Added to Favorite"+tweets.toString());
+        //showToast(this, "Re Tweet clicked");
+        //Log.d("DEBUG","Re Tweet"+tweets.toString());
     }
 
     public void addToFavorite(View view) {
-
-        Log.d("DEBUG","Added to Favorite"+tweets.toString());
+        //showToast(this, "Add to Favorite clicked");
+        //Log.d("DEBUG","Added to Favorite"+tweets.toString());
     }
 }

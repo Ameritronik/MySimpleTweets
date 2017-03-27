@@ -27,13 +27,16 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import static com.codepath.apps.mysimpletweets.R.drawable.my_placeholder;
 import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
-public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements RecyclerView.OnClickListener{
 
     private final int PHOTO = 2; // This tweet has a picture
     private final int VIDEO   = 1; // has video
     private final int NORMAL  = 0; // Normal tweet no pic or vid
     private static ArrayList<Tweet> tweets;
     private static Context mContext;
+    public View mCurrentView;
+    public int tPosition;
     // construct
     public ComplexRecyclerAdapter(Context context, ArrayList<Tweet> tweets) {
         this.tweets = tweets;
@@ -71,28 +74,37 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         RecyclerView.ViewHolder viewHolder;
+        View view;
        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
         switch (viewType) {
             case NORMAL:
                 View textOnly = inflater.inflate(R.layout.simple_tweet_view,viewGroup, false);
                 viewHolder = new SimpleTweetViews(mContext, textOnly, tweets);
+                view =textOnly;
                 break;
             case PHOTO:
                 View FullView = inflater.inflate(R.layout.photo_tweet_view,viewGroup, false);
                 viewHolder = new PhotoTweetViews(mContext, FullView, tweets);
+                view = FullView;
                 break;
             default:
                 FullView = inflater.inflate(R.layout.grid_view_video_tweet,viewGroup, false);
                 viewHolder = new PhotoTweetViews(mContext, FullView, tweets);
+                view = FullView;
                 break;
         }
+        mCurrentView = view;
+        //mCurrentView.setOnClickListener(this);
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-
+        mCurrentView.setTag(position);
+        mCurrentView.setOnClickListener(this);
+        tPosition = position;
         switch (viewHolder.getItemViewType()) {
             case NORMAL:
                 SimpleTweetViews twHolder = (SimpleTweetViews) viewHolder;
@@ -105,8 +117,10 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             default:
                 twHolder = (SimpleTweetViews) viewHolder;
                 configureSimpleTweetViews(twHolder, position);
+
                 break;
         }
+
 
     }
 
@@ -206,4 +220,9 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return relativeDate;
     }
 
+    @Override
+    public void onClick(View v) {
+        int position = tPosition;
+        //Toast.makeText(mCurrentView.getContext(),"Item #: "+Integer.toString(position),Toast.LENGTH_SHORT).show();
+    }
 } // end ComplexRecyclerAdapter

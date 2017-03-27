@@ -15,7 +15,7 @@ The following **required** functionality is completed:
   * [x] User can view more tweets as they scroll with [infinite pagination](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews-and-RecyclerView). Number of tweets is unlimited.
     However there are [Twitter Api Rate Limits](https://dev.twitter.com/rest/public/rate-limiting) in place.
 * [x] User can **compose and post a new tweet**
-  * [x] User can click a “Compose” icon in the Action Bar on the top right
+  * [x] User can click a ï¿½Composeï¿½ icon in the Action Bar on the top right
   * [x] User can then enter a new tweet and post this to twitter
   * [x] User is taken back to home timeline with **new tweet visible** in timeline
 
@@ -53,7 +53,9 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<a href="http://imgur.com/5sWXB26"><img src="http://i.imgur.com/5sWXB26.gif" title="source: imgur.com" /></a>
+http://i.imgur.com/ntaJhFW.gif
+
+<a href="http://imgur.com/ntaJhFW"><img src="http://i.imgur.com/ntaJhFW.gif" title="source: imgur.com" /></a>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

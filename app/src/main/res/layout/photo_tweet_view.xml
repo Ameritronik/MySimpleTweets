@@ -39,6 +39,9 @@
         android:layout_below="@+id/tvUserName"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:layout_toRightOf="@+id/ivProfileImage"
+        android:autoLink="all"
+        android:clickable="true"
+        android:linksClickable="true"
         android:padding="@dimen/oneDp"
         android:text="@string/bobs_tweet"
         android:textSize="@dimen/twelvePoint" />
@@ -74,18 +77,19 @@
         android:layout_alignEnd="@+id/tvTimeStamp"
         android:layout_below="@+id/tvBody"
         android:layout_marginEnd="50dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toRightOf="@+id/ivProfileImage"
         android:adjustViewBounds="true"
         android:background="#FFFFFF"
         android:scaleType="fitXY"
-        android:src="@drawable/my_placeholder"
-        android:layout_toRightOf="@+id/ivProfileImage"
-        android:layout_toEndOf="@+id/ivProfileImage" />
+        android:src="@drawable/my_placeholder" />
     <RelativeLayout
         android:id="@+id/twActions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivPhoto"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_alignLeft="@+id/ivPhoto"
         android:layout_alignStart="@+id/ivPhoto">
