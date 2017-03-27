@@ -24,6 +24,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorAccent"
+        android:background="@android:color/darker_gray"
         tools:ignore="ObsoleteLayoutParam,RtlHardcoded" />
 </LinearLayout>

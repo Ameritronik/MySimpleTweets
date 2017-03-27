@@ -135,16 +135,17 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         TextView tvStarCount = (TextView) view.itemView.findViewById(R.id.tvStarCount);
         //4. Populate data into the subviews
         tvUserName.setText(tweet.getUser().getScreenName());
-        tvUserName.setTextColor(Color.BLACK);
+        tvUserName.setTextColor(Color.WHITE);
         tvUserName.setTypeface(null, Typeface.BOLD);
         String rName = "@"+tweet.getUser().getName();
         tvRealName.setText(rName);
-        tvRealName.setTextColor(Color.GRAY);
+        tvRealName.setTextColor(Color.WHITE);
         tvBody.setText(tweet.getBody());
+        tvBody.setTextColor(Color.WHITE);
         String tweetTime = tweet.getCreatedAt();
         String showReltime = getRelativeTimeAgo(tweetTime);
         tvRelTime.setText(showReltime);
-        tvRelTime.setTextColor(Color.GRAY);
+        tvRelTime.setTextColor(Color.WHITE);
         tvRetweetCount.setText(tweet.gettRetweetCount());
         tvStarCount.setText(tweet.gettFavoriteCount());
         ivProfileImage.setImageResource((android.R.color.transparent));
@@ -167,16 +168,17 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         //Log.d("DEBUG","in Config Photo Views");
         //4. Populate data into the subviews
         tvUserName.setText(tweet.getUser().getScreenName());
-        tvUserName.setTextColor(Color.BLACK);
+        tvUserName.setTextColor(Color.WHITE);
         tvUserName.setTypeface(null, Typeface.BOLD);
         String rName = "@"+tweet.getUser().getName();
         tvRealName.setText(rName);
-        tvRealName.setTextColor(Color.GRAY);
+        tvRealName.setTextColor(Color.WHITE);
         tvBody.setText(tweet.getBody());
+        tvBody.setTextColor(Color.WHITE);
         String tweetTime = tweet.getCreatedAt();
         String showReltime = getRelativeTimeAgo(tweetTime);
         tvRelTime.setText(showReltime);
-        tvRelTime.setTextColor(Color.GRAY);
+        tvRelTime.setTextColor(Color.WHITE);
         tvRetweetCount.setText(tweet.gettRetweetCount());
         tvStarCount.setText(tweet.gettFavoriteCount());
         ivProfileImage.setImageResource((android.R.color.transparent));
