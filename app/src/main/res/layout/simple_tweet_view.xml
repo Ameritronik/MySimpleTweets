@@ -87,8 +87,6 @@
             android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:clickable="true"
-            android:onClick="tweetReply"
             android:src="@drawable/ic_image_reply"
             tools:ignore="RtlHardcoded" />
 
@@ -106,8 +104,6 @@
             android:layout_height="25dp"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@id/tvRetweetCount"
-            android:clickable="true"
-            android:onClick="reTweet"
             android:src="@drawable/ic_image_retweet" />
 
         <TextView
@@ -126,8 +122,6 @@
             android:layout_height="25dp"
             android:layout_alignBottom="@+id/ivReply"
             android:layout_toLeftOf="@id/tvStarCount"
-            android:clickable="true"
-            android:onClick="addToFavorite"
             android:src="@drawable/ic_image_star" />
     </RelativeLayout>
 

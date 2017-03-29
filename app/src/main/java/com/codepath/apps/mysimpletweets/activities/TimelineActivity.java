@@ -281,18 +281,4 @@ public class TimelineActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void tweetReply(View view) {
-        //showToast(this, "Tweet Reply clicked");
-        //Log.d("DEBUG","Tweet Reply "+tweets.toString());
-    }
-
-    public void reTweet(View view) {
-        //showToast(this, "Re Tweet clicked");
-        //Log.d("DEBUG","Re Tweet"+tweets.toString());
-    }
-
-    public void addToFavorite(View view) {
-        //showToast(this, "Add to Favorite clicked");
-        //Log.d("DEBUG","Added to Favorite"+tweets.toString());
-    }
 }

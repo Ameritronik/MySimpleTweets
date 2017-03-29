@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.models.Tweet;
@@ -153,6 +154,12 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 .fit()
                 .centerInside()
                 .transform(new RoundedCornersTransformation(10, 10)).into(ivProfileImage);
+        tvRetweetCount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String rtwct ="Retweet count: "+tweet.gettRetweetCount().toString();
+                Toast.makeText(getContext(),rtwct,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void configurePhotoTweetViews(PhotoTweetViews view, int position) {
@@ -193,6 +200,12 @@ public class ComplexRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 .error(my_placeholder)
                 .transform(new RoundedCornersTransformation(10, 10))
                 .into(tweetPhoto);
+        tvRetweetCount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String rtwct ="Retweet count: "+tweet.gettRetweetCount().toString();
+                Toast.makeText(getContext(),rtwct,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
