@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.codepath.apps.mysimpletweets"
+        applicationId "com.codepath.apps.tweet"
         minSdkVersion 16
         targetSdkVersion 25
     }
@@ -50,7 +50,9 @@ dependencies {
     compile 'com.android.support:design:25.3.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'commons-io:commons-io:2.4'
-    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:support-v4:19.0.0'
     compile 'com.google.android.gms:play-services-plus:10.2.0'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.android.support:recyclerview-v7:25.2.0'
+
 }

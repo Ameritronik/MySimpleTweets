@@ -42,6 +42,7 @@
         android:autoLink="web"
         android:clickable="true"
         android:linksClickable="true"
+        android:textColorLink="@color/linkcolor"
         android:padding="@dimen/oneDp"
         android:text="@string/bobs_tweet"
         android:textSize="@dimen/twelvePoint" />

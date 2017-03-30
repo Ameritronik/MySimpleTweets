@@ -4,7 +4,6 @@
     <string name="app_name">Twitter</string>
     <string name="login_label">Connect to Twitter</string>
     <string name="title_activity_timeline">\t pjaytumkur @HK</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="settings">settings</string>
     <string name="bobs_tweet">BoBs Tweet</string>
     <string name="bob">Bob</string>
